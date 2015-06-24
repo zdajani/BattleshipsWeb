@@ -1,6 +1,11 @@
 <pre class='board'>
 <%=@board%>
 </pre>
-
-
-
+submarine
+coords
+direction
+<form action="/new_game" method="post">
+  <input type="text" name="coords">
+  <input type="text" name="direction">
+  <input type="submit" value="Place Ship">
+</form>
