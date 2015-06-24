@@ -1,11 +1,14 @@
 <pre class='board'>
 <%=@board%>
 </pre>
-submarine
 coords
 direction
 <form action="/new_game" method="post">
-  <input type="text" name="coords">
-  <input type="text" name="direction">
+  <label for="battleship">Battleship</label>
+  <input type="text" name="battleshipcoords">
+  <input type="text" name="battleshipdir">
+  <label for="submarine">Submarine</label>
+  <input type="text" name="subcoords">
+  <input type="text" name="subdir">
   <input type="submit" value="Place Ship">
 </form>
