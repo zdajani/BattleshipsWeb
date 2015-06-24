@@ -16,6 +16,7 @@ class BattleshipsWeb < Sinatra::Base
     @board = $game.own_board_view $game.player_1
 
     erb :new_game
+    
   end
 
 end
