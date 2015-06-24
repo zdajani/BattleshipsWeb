@@ -15,5 +15,5 @@ feature 'Starting a new game' do
     click_on 'Place Ship'
 
   end
-  
+
 end
