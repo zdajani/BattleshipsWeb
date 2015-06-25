@@ -15,56 +15,48 @@ class BattleshipsWeb < Sinatra::Base
 
 
   post '/new_game' do
-      $game ||= Game.new Player, Board
-       assign_player unless PLAYERS.empty?
-
-
-    # $game  ||= Game.new Player, Board
+    $game ||= Game.new Player, Board
+    assign_player unless PLAYERS.empty?
 
     @board = $game.own_board_view $game.send(session[:player])
+
     erb :new_game
   end
 
   post '/placing_ships' do
-
-    ships_hash = {'battleship'          => Ship.battleship,
-                  'submarine'           => Ship.submarine,
-                  'cruiser'             => Ship.cruiser,
-                  'aircraft_carrier'    => Ship.aircraft_carrier,
-                  'destroyer'           => Ship.destroyer}
     begin
-    $game.send(session[:player]).place_ship ships_hash[params[:shiptypes]], params[:coords], params[:orientation]
-    rescue
-    @error = "Invalid Coordinate Try Again!"
-    end
-    @board = $game.own_board_view $game.send(session[:player])
+      $game.send(session[:player]).place_ship Ship.send(params[:shiptypes]), params[:coords], params[:orientation]
+    rescue RuntimeError => @error
 
+    end
+
+    @board = $game.own_board_view $game.send(session[:player])
     erb :new_game
   end
 
   get '/stage_two' do
     @board  = $game.own_board_view $game.send(session[:player])
     @board2 = $game.opponent_board_view $game.send(session[:player])
-    erb :player1_game
+    erb :stage_two
   end
 
   post '/shooting' do
-      begin
-        coordinate = params[:coords]
-        @shoot_target = $game.send(session[:player]).shoot coordinate.to_sym
-      rescue
-      @error = "Invalid coordinate Try Again!"
-      end
+    begin
+      coordinate = params[:coords]
+      @shoot_target = $game.send(session[:player]).shoot coordinate.to_sym
+    rescue RuntimeError => @error
+      
+    end
 
-      @board  = $game.own_board_view $game.send(session[:player])
-      @board2 = $game.opponent_board_view $game.send(session[:player])
+    @board  = $game.own_board_view $game.send(session[:player])
+    @board2 = $game.opponent_board_view $game.send(session[:player])
 
-      if !$game.has_winner?
-        erb :player1_game
-      else
-        erb :winner
-      end
-  
+    if $game.has_winner?
+      erb :winner
+    else
+      erb :stage_two
+    end
+
   end
 
   get '/winner' do
