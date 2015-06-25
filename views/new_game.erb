@@ -1,15 +1,28 @@
+<% if @error %>
+  <div>
+    <%= @error %>
+  </div>
+  <% end %>
+
 <pre class='board'>
 <%=@board%>
 </pre>
-
-coords
-direction
 <form action="/new_game" method="post">
-  <label for="battleship">Battleship</label>
-  <input type="text" name="battleshipcoords">
-  <input type="text" name="battleshipdir">
-  <label for="submarine">Submarine</label>
-  <input type="text" name="subcoords">
-  <input type="text" name="subdir">
+  <input type="text" name="coords">
+  <select name="shiptypes">
+    <option value="battleship">Battleship</option>
+    <option value="submarine">Submarine</option>
+    <option value="destroyer">Destroyer</option>
+    <option value="cruiser">Cruiser</option>
+    <option value="aircraft_carrier">Aircraft Carrier</option>
+  </select>
+  <select name="orientation">
+    <option value="horizontal">Horizontal</option>
+    <option value="vertical">Vertical</option>
+  </select>
   <input type="submit" value="Place Ship">
+</form>
+
+<form action="/player1_game">
+  <input type="submit" value="Stage Two">
 </form>
