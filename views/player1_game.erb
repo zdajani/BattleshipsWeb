@@ -7,8 +7,9 @@
 <pre class='board'>
 <%=@board%>
 </pre>
+<%= @shoot_target %>
 
-<form action="/player1_game" method="post">
+<form action="/shooting" method="post">
   <input type="text" name="coords">
   <input type="submit" value="Shoot!">
 </form>
@@ -16,5 +17,3 @@
 <pre class='board2'>
 <%=@board2%>
 </pre>
-
-<!-- <%= @shoot_target %> Keep if you want to see miss or hit add this to controller (to equal the action) and here  -->
