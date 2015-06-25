@@ -7,7 +7,7 @@ class BattleshipsWeb < Sinatra::Base
   run! if app_file == $0
 
   get '/' do
-    'Hello BattleshipsWeb!'
+    erb :index
   end
 
   get '/new_game' do
@@ -17,17 +17,12 @@ class BattleshipsWeb < Sinatra::Base
   end
 
   post '/new_game' do
+    $game  = Game.new Player, Board
 
     $game.player_1.place_ship Ship.battleship, params[:battleshipcoords], params[:battleshipdir]
-
     $game.player_1.place_ship Ship.submarine, params[:subcoords], params[:subdir]
-    # @board  = $game.own_board_view $game.player_1
-    # # redirect '/player1_board'
-    
-    # @board2 = $game.opponent_board_view $game.player_2
+
     redirect '/player1_game'
-
-
   end
 
   get '/player1_game' do
@@ -36,14 +31,11 @@ class BattleshipsWeb < Sinatra::Base
     erb :player1_game
   end
 
-  get '/player1_game' do
+  post '/player1_game' do
+    coordinate = params[:coords]
+    @state = $game.player_1.shoot coordinate.to_sym
     @board  = $game.own_board_view $game.player_1
     @board2 = $game.opponent_board_view $game.player_1
-    $game.player_1.shoot params[:shootcoords]
-    
+    erb :player1_game
   end
-
-
-
-
 end

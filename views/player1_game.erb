@@ -2,13 +2,12 @@
 <%=@board%>
 </pre>
 
+<!-- <%= @state %> Keep if you want to see miss or hit -->
 
 <form action="/player1_game" method="post">
-  <input type="text" name="shootcoords">
+  <input type="text" name="coords">
   <input type="submit" value="shoot">
 </form>
-
-
 
 <pre class='board2'>
 <%=@board2%>
