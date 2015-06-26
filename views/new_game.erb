@@ -1,12 +1,11 @@
+<pre class="board"><%=@board%></pre>
+
 <% if @error %>
   <div>
     <%= @error %>
   </div>
   <% end %>
 
-<pre class='board'>
-<%=@board%>
-</pre>
 <form action="/placing_ships" method="post">
   <input type="text" name="coords">
 

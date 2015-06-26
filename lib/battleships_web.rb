@@ -23,7 +23,7 @@ class BattleshipsWeb < Sinatra::Base
     erb :new_game
   end
 
-  post '/placing_ships' do
+  post '/new_game' do
     begin
       $game.send(session[:player]).place_ship Ship.send(params[:shiptypes]), params[:coords], params[:orientation]
     rescue RuntimeError => @error
@@ -34,7 +34,7 @@ class BattleshipsWeb < Sinatra::Base
     erb :new_game
   end
 
-  get '/stage_two' do
+  get '/shooting' do
     @board  = $game.own_board_view $game.send(session[:player])
     @board2 = $game.opponent_board_view $game.send(session[:player])
     erb :stage_two
@@ -45,7 +45,7 @@ class BattleshipsWeb < Sinatra::Base
       coordinate = params[:coords]
       @shoot_target = $game.send(session[:player]).shoot coordinate.to_sym
     rescue RuntimeError => @error
-      
+
     end
 
     @board  = $game.own_board_view $game.send(session[:player])
